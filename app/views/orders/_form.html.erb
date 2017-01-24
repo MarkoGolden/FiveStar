@@ -1,0 +1,32 @@
+<div class="content">
+  <% if @order.errors.any? %>
+    <div id="errors" class="alert alert-danger">
+      <p><strong>Please correct the following <%= pluralize(@order.errors.count, "error") %>:</strong></p>
+      <ul>
+	<% @order.errors.full_messages.each do |msg| %>
+	  <li><%= msg  %></li>
+	<% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form_for @order do |f| %>
+    <div class="form-group">
+      <%= f.label :customer_id, "Mobile"%>
+      <%= f.collection_select(:customer_id, Customer.all, :id, :mobile, {prompt: true}, { :class => "form-control" })%>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :product_id, "Price" %>
+      <%= f.collection_select(:product_id, Product.all, :id, :price, {prompt: true}, { :class => "form-control" }) %>
+    </div>
+      
+    <div class="form-group">
+      <%= f.label :reference %>
+      <div class="input-field">
+      <%= f.text_field :reference, class: 'form-control' %>
+      </div>
+    </div>
+	<%= f.hidden_field :status, value: "New" %>
+      <%= f.submit :class => "btn btn-success" %>
+  <% end %>
+</div>

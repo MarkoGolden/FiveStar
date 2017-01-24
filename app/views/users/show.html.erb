@@ -1,0 +1,122 @@
+<h1><%= @user.fname %> <%= @user.lname %></h1>
+<p><%= link_to "Edit", edit_user_path(@user), class: 'btn btn-success' %></p>
+<div class="row">
+<div class="col-md-6">
+<% if @user.fname.present? %>
+	<p>
+	  <strong>First name: </strong>
+	  <%= @user.fname %>
+	</p>
+<% end %>
+
+<% if @user.lname.present? %>
+	<p>
+	  <strong>Last name: </strong>
+	  <%= @user.lname %>
+	</p>
+<% end %>
+
+<% if @user.mobile.present? %>
+	<p>
+	  <strong>Mobile: </strong>
+	  <%= @user.mobile %>
+	</p>
+<% end %>
+
+<% if @user.phone.present? %>
+	<p>
+	  <strong>Phone: </strong>
+	  <%= @user.phone %>
+	</p>
+<% end %>
+
+<% if @user.email.present? %>
+	<p>
+	  <strong>Email: </strong>
+	  <%= @user.email %>
+	</p>
+<% end %>
+
+<% if @user.address.present? %>
+	<p>
+	  <strong>Address: </strong>
+	  <%= @user.address %>
+	</p>
+<% end %>
+
+<% if @user.fax.present? %>
+	<p>
+	  <strong>Fax: </strong>
+	  <%= @user.fax %>
+	</p>
+<% end %>
+
+<% if @user.id_pp.present? %>
+	<p>
+	  <strong>ID/PP Number: </strong>
+	  <%= @user.id_pp %>
+	</p>
+<% end %>
+
+<% if @user.sex.present? %>
+	<p>
+	  <strong>Sex: </strong>
+	  <%= @user.sex %>
+	</p>
+<% end %>
+
+<% if @user.disabled.present? %>
+	<p>
+	  <strong>Disabled: </strong>
+	  <%= @user.disabled %>
+	</p>
+<% end %>
+
+<% if @user.race.present? %>
+	<p>
+	  <strong>Race: </strong>
+	  <%= @user.race %>
+	</p>
+<% end %>
+
+<% if @user.agreed.present? %>
+	<p>
+	  <strong>Confirm agreement: </strong>
+	  <%= @user.agreed %>
+	</p>
+<% end %>
+
+<% if @user.starts_at.present? %>
+	<p>
+	  <strong>Start Date: </strong>
+	  <%= @user.starts_at %>
+	</p>
+<% end %>
+
+<% if @user.ends_at.present? %>
+	<p>
+	  <strong>End Date: </strong>
+	  <%= @user.ends_at %>
+	</p>
+<% end %>
+
+<% if @user.status.present? %>
+	<p>
+	  <strong>Enabled: </strong>
+	  <%= "#{@user.status}".capitalize %>
+	</p>
+<% else %>
+	<p>
+	  <strong>Enabled: </strong>
+	  <%= "false".capitalize %>
+	</p>
+<% end %>
+</div>
+  <div class="col-md-6">
+    <% if @user.photo.present? %>
+    <%= image_tag @user.photo.url(:medium), class: 'img-thumbnail' %>
+    <% else %>
+      <%= image_tag 'no-image-available.jpeg', class: 'img-thumbnail' %>
+    <% end %>
+  </div>
+   </div>

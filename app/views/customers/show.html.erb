@@ -1,0 +1,169 @@
+<h1><%= @customer.fullname %></h1>
+<p><%= link_to 'Edit', edit_customer_path(@customer), class: 'btn btn-success'  %> <%= link_to 'Delete', customer_path(@customer.id), :method => :delete, data: { confirm: 'Are you sure you want to delete this customer?' }, title: "Delete", class: "btn btn-danger"  %></p>
+
+
+<div class="row">
+<div class="col-md-6">
+<% if @customer.first_name.present? %>
+  <p>
+    <strong>First name:</strong>
+    <%= @customer.first_name %>
+  </p>
+<% end %>
+
+<% if @customer.last_name.present? %>
+  <p>
+    <strong>Last name:</strong>
+    <%= @customer.last_name %>
+  </p>
+<% end %>
+
+<% if @customer.mobile.present? %>
+  <p>
+    <strong>Mobile:</strong>
+    <%= @customer.mobile %>
+  </p>
+<% end %>
+
+<% if @customer.address.present? %>
+  <p>
+    <strong>Address:</strong>
+    <%= @customer.address %>
+  </p>
+<% end %>
+
+<% if @customer.gps_location.present? %>
+  <p>
+    <strong>Gps location:</strong>
+    <%= @customer.gps_location %>
+  </p>
+<% end %>
+
+<% if @customer.id_pp.present? %>
+  <p>
+    <strong>Id pp:</strong>
+    <%= @customer.id_pp %>
+  </p>
+<% end %>
+
+<% if @customer.sex.present? %>
+  <p>
+    <strong>Sex:</strong>
+    <%= @customer.sex %>
+  </p>
+<% end %>
+
+<% if @customer.disabled.present? %>
+  <p>
+    <strong>Disabled:</strong>
+    <%= @customer.disabled %>
+  </p>
+<% end %>
+
+<% if @customer.race.present? %>
+  <p>
+    <strong>Race:</strong>
+    <%= @customer.race %>
+  </p>
+<% end %>
+
+<% if @customer.number_in_household.present? %>
+  <p>
+    <strong>Number in household:</strong>
+    <%= @customer.number_in_household %>
+  </p>
+<% end %>
+
+<% if @customer.terms_agreed.present? %>
+  <p>
+    <strong>Terms agreed:</strong>
+    <%= @customer.terms_agreed %>
+  </p>
+<% end %>
+
+<% if @customer.start_date.present? %>
+  <p>
+    <strong>Start date:</strong>
+    <%= @customer.start_date %>
+  </p>
+<% end %>
+
+<% if @customer.end_date.present? %>
+  <p>
+    <strong>End date:</strong>
+    <%= @customer.end_date %>
+  </p>
+<% end %>
+
+<% if @customer.end_date_reason.present? %>
+  <p>
+    <strong>End date reason:</strong>
+    <%= @customer.end_date_reason %>
+  </p>
+<% end %>
+
+<% if @customer.power_pack_paid.present? %>
+  <p>
+    <strong>Power pack paid:</strong>
+    <%= @customer.power_pack_paid %>
+  </p>
+<% end %>
+
+<% if @customer.lease_stove.present? %>
+  <p>
+    <strong>Own stove:</strong>
+    <%= @customer.lease_stove %>
+  </p>
+<% end %>
+
+<% if @customer.stove_number.present? %>
+  <p>
+    <strong>Stove number:</strong>
+    <%= @customer.stove_number %>
+  </p>
+<% end %>
+
+<% if @customer.installed.present? %>
+  <p>
+    <strong>Installed:</strong>
+    <%= @customer.installed %>
+  </p>
+<% end %>
+
+<% if @customer.fuel_heat.present? %>
+   <p>
+    <strong>Fuel for heating:</strong>
+        <% @customer.fuel_heat.each do |value| %>
+          <% if value[1] != '0' %>
+            <br><%= value[0].gsub('heat_', '').humanize.capitalize %>
+          <% end %>
+        <% end %>
+        <% #raise %>
+  </p>
+<% end %>
+
+<% if @customer.fuel_cook.present? %>
+  <p>
+    <strong>Fuel for cooking:</strong>
+    <% @customer.fuel_cook.each do |value| %>
+      <% if value[1] != '0' %>
+        <br><%= value[0].gsub('cook_', '').humanize.capitalize %>
+      <% end %>
+    <% end %>
+
+  </p>
+<% end %>
+
+  <p>
+    <strong>Agent Name:</strong>
+    <%= link_to @customer.user.fname, @customer.user %>
+    </p>
+  </div>
+  <div class="col-md-6">
+    <% if @customer.photo.present? %>
+    <%= image_tag @customer.photo.url(:medium), class: 'img-thumbnail' %>
+    <% else %>
+      <%= image_tag 'no-image-available.jpeg', class: 'img-thumbnail' %>
+    <% end %>
+  </div>
+  </div>

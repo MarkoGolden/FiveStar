@@ -1,0 +1,12 @@
+div.container{
+  @include outer-container;
+  min-height:800px;
+
+  .content{
+    @include span-columns(7);
+  }
+  .sidebar{
+    @include span-columns(5);
+  }
+
+}

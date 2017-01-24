@@ -1,0 +1,23 @@
+@import "normalize-rails";
+
+//@import "bourbon";
+//@import "base/base";
+//@import "neat";
+//@import 'navigation';
+//@import 'home';
+//@import "footer";
+//@import "base/5star_typography";
+// Core variables and mixins
+@import "bootstrap";
+@import "5star/signin";
+@import "5star/nav";
+@import "5star/select_box";
+@import "5star/sticky_footer";
+
+// Pickadate
+@import "pickadate/classic";
+@import "pickadate/classic.date";
+@import "pickadate/classic.time";
+//select2
+@import "select2";
+@import "select2-bootstrap";

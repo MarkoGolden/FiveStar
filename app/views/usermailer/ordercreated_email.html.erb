@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+	<head><meta content='text/html; charset=UTF-8' http-equiv='Content-Type' /></head>
+<body>
+<h1>Order Created</h1>
+<p>Order Id: <%= @order.id %><br>
+Customer Name: <%= @order.customer.first_name %><br>
+Customer Mobile: <%= @order.customer.mobile %><br>
+For more details, please check at <%= @url %><br>
+</p>
+</body>
+</html>
+

@@ -1,0 +1,140 @@
+<div class="content">
+  <% if @user.errors.any? %>
+    <div id="errors" class="alert alert-danger">
+      <p><strong>Please correct the following <%= pluralize(@user.errors.count, "error") %>:</strong></p>
+      <ul>
+	<% @user.errors.full_messages.each do |msg| %>
+	  <li><%= msg  %></li>
+	<% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form_for @user do |f| %>
+    <div class="form-group">
+      <%= f.label :fname, "First Name" %>
+      <div class="input-field">
+	<%= f.text_field :fname, class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :lname, "Last Name" %>
+      <div class="input-field">
+	<%= f.text_field :lname, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :photo %>
+      <% if @user.photo.present? %>
+        <%= image_tag @user.photo.url(:medium) %>
+      <% end %>
+      <div class="input-field">
+        <%= f.file_field :photo %>
+      </div>
+    </div>
+<fieldset>
+  <p>Account Settings</p>
+    <div class="form-group">
+
+      <%= f.label :email %>
+      <div class="input-field">
+	<%= f.text_field :email, class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <%= f.label :password %>
+      <div class="input-field">
+	<%= f.password_field :password, class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <%= f.label :passwordc %>
+      <div class="input-field">
+	<%= f.password_field :password_confirmation, class: 'form-control' %>
+      </div>
+    </div>
+</fieldset>
+    <div class="form-group">
+
+      <%= f.label :mobile %>
+      <div class="input-field">
+	<%= f.text_field :mobile, class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <%= f.label :address %>
+      <div class="input-field">
+	<%= f.text_area :address, class: 'form-control'  %>
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <%= f.label :id_pp, "ID/PPNumber" %>
+      <div class="input-field">
+	<%= f.text_field :id_pp, class: 'form-control' %>
+      </div>
+    </div>
+
+
+
+    <div class="form-group">
+
+      <%= f.label :agreed, "Confirmation" %>
+      <div class="input-field">
+	<%= f.select(:agreed, ["Yes", "No"], {selected: "Yes"}, { :class => "form-control" })  %>
+      </div>
+    </div>
+
+        <div class="form-group">
+
+      <%= f.label :starts_at %>
+      <div class="input-field">
+        <%= f.text_field :starts_at, class: 'datepicker form-control' %>
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <%= f.label :ends_at %>
+      <div class="input-field">
+        <%= f.text_field :ends_at, class: 'datepicker form-control' %>
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <% if current_user.admin? %>
+        <%= f.label :role %>
+        <div class="input-field">
+          <%= f.select :role, collection: User.roles.keys %>
+        </div>
+      <% elsif current_user.franchise? %>
+        <%= f.hidden_field :role, value: "agent" %>
+      <% end %>
+
+    </div>
+
+    <div class="form-group">
+      <label> Select Franchise if you have select "agent" from above role list</label>
+      <div class="input-field">
+        <%= f.select :owner_id, User.franchise.map {|user| [user.fname, user.id]}, {include_blank: "Please select"} if current_user.admin?%>
+     </div>
+    </div>
+    <%= f.hidden_field :owner_id, value: current_user.id if current_user.franchise? %>
+
+    <div class="form-group">
+
+      <div class="input-field checkbox">&nbsp;&nbsp;&nbsp;
+  <%= f.check_box :status %> Enabled
+      </div>
+    </div>
+      <%= f.submit "Save", :class => "btn btn-success" %>
+  <% end %>
+</div>

@@ -1,0 +1,28 @@
+.navbar-brand {
+    img {
+        max-height: 100%;
+    }
+}
+
+.navbar-default {
+    background-color: #3F3F3F;
+    border-color: #e7e7e7;
+
+    .navbar-nav > li > a {
+        color: #aaa;
+        &:hover {
+            color: #fff;
+        }
+    }
+}
+fieldset{
+  background:#fff !important;
+  border:1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+
+  p{
+  font-style: italic;
+  font-size: 18px;
+  }
+}

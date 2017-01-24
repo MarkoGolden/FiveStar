@@ -1,0 +1,95 @@
+<% if @message.present? %>
+  <div id="errors">
+    <h1>Order Import Error</h1>
+    <p>Following <%= pluralize(@message.count, "order") %> didn't import properly. Either no matching customer found or value mismatch.</p>
+    <ul>
+      <% @message.each do |msg| %>
+        <li><%= msg  %></li>
+      <% end %>
+    </ul>
+<% end %>
+
+<% if current_user.admin? %>
+  <div class="row">
+    <div class="col-md-2 col-md-offset-3">
+      <% if policy(Order.new).new? %>
+        <%= link_to "Create an order", new_order_path, class: 'btn btn-success' %> <span class="pull-right">OR</span>
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <%= form_tag import_orders_path, multipart: true, class: 'form-inline' do %>
+        <div class="form-group">
+          <%= file_field_tag :file%>
+        </div>
+        <%= submit_tag "Import orders from CSV", class: 'btn btn-success' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<h1>List of Orders</h1>
+<p class="lead">Filter orders by</p>
+<%= form_for :search, url: order_filter_path, method: :get, html: {class: 'form-inline'} do |f| %>
+  <div class="form-group">
+    <%= f.label "Status", class:"sr-only" %>
+    <%= f.select :status, options_for_select(Order::STATUS, selected: (params[:search][:status] if params[:search].present?)), {include_blank: "Order Status"}, { :class => "form-control" } %>
+  </div>
+  <div class="form-group">
+    <%= f.label  "From date", class: 'sr-only' %>
+    <%= f.text_field :start_date, class: 'datepicker form-control', placeholder: 'From date', value: (params[:search][:start_date] if params[:search].present?) %>
+  </div>
+  <div class="form-group">
+    <%= f.label  "To date", class: 'sr-only' %>
+    <%= f.text_field :end_date, class: 'datepicker form-control', placeholder: 'To date', value: (params[:search][:end_date] if params[:search].present?)  %>
+  </div>
+  <%= f.submit "Filter", class: "btn btn-success" %>
+   <%= f.submit "Export As CSV", class: "btn btn-info" %>
+<% end %>
+<hr/>
+<%= form_for :bulkupdate, url: bulkupdate_orders_path, method: :put, html: {class: 'form-inline'} do |f| %>
+
+<table class="table">
+  <tbody>
+    <tr>
+      <th> # </th>
+      <th> Order Id</th>
+      <th> Mobile</th>
+      <th> Customer</th>
+      <th> Agent</th>
+      <th> Franchise</th>
+      <th> Product</th>
+      <th> Order Created Date</th>
+      <th> Status</th>
+    </tr>
+    <% @orders.each do |order| %>
+    <tr>
+      <td><%= check_box_tag "order_id[]", order.id %></td>
+	    <td><%= link_to "Order #{order.id}", order %></td>
+	    <td><%= order.customer.mobile %></td>
+	    <td><%= order.customer.first_name rescue nil %> <%= order.customer.last_name rescue nil %></td>
+	    <td><%= order.customer.user.full_name  rescue nil %></td>
+      <td><%= order.customer.user.owner.full_name rescue nil %></td>
+	    <td><%= order.product.name rescue "No Matching Product" %></td>
+      <td><%= order.created_at.strftime("%m/%d/%Y") %></td>
+	    <td><%= order.status %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<hr/>
+<div class="form-group">
+  <%= f.label :status, "Order Status" %>
+  <div class="form-group">
+    <% if current_user.admin? %>
+     <%= f.select(:status, Order::STATUS, {}, class: 'form-control') %>
+    <% elsif current_user.franchise? %>
+      <%= f.select(:status, Order::FRANCHISE_STATUS, {}, class: 'form-control') %>
+    <% elsif current_user.agent? %>
+      <%= f.select(:status, Order::AGENT_STATUS, {}, class: 'form-control') %>
+    <% end %>
+  </div>
+</driv>
+<%= f.submit "Bulk Update", class: "btn btn-success" %>
+<% end %>
+<div class="col-md-2 col-md-offset-4">
+<%= paginate @orders %>
+</div>

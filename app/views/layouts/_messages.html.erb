@@ -1,0 +1,8 @@
+     <% if flash.present? %>  
+      <% flash.each do |name, msg| %>
+      <% if name == "notice" %>
+        <%= content_tag :div, msg, class: " #{name} alert  alert-success" %>
+      <% elsif name == "error" %>
+         <%= content_tag :div, msg, class: " #{name} alert alert-danger" %>
+      <% end %><% end %>
+    <% end %>

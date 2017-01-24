@@ -1,0 +1,64 @@
+<% if current_user.present? %>
+<div class="btn-group pull-right">
+<%= link_to 'Download CSV', customers_path(format: :csv), class: 'btn btn-info' %> 
+<%= link_to 'New Customer', new_customer_path, class: 'btn btn-success' %>
+</div>
+<% end  %>
+        
+         
+<% if params[:search].present? 
+      mobile_value = params[:search][:mobile]
+      agent_value = params[:search][:agent]
+      franchise_value = params[:search][:franchise]
+      else
+        var = " " 
+      end 
+%>
+
+<h1 class="page-header">Customers List </h1> 
+<%= form_for :search, url: filter_customer_path, method: :get, html: {class: 'form-inline customer-search'} do |f| %>
+  <div class="form-group">
+    <%= f.label "Mobile", class:"sr-only" %>
+    <%= f.select :mobile, @mobiles.unshift(["Mobile Number", ""]), {:selected => mobile_value}, { :class => "form-control" } %>
+  </div>
+  <% if current_user.admin? %>
+  <div class="form-group">
+    <%= f.label "Agent", class:"sr-only" %>
+    <%= f.select :agent, @agents.unshift(["Agent Name", ""]), {:selected => agent_value}, { :class => "form-control" } %>
+  </div>
+  <div class="form-group">
+    <%= f.label "Franchise", class:"sr-only" %>
+    <%= f.select :franchise, @franchises.unshift(["Franchise Name",""]), {:selected => franchise_value}, { :class => "form-control" }%>
+  </div>
+  <% end %>
+  <%= f.submit "Filter", class: "btn btn-success" %>
+
+<% end %>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Mobile</th>
+      <th>Agent</th>
+      <th>Franchise</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @customers.each do |customer| %>
+      <tr>
+        <td><%= link_to customer.first_name, customer %></td>
+        <td><%= link_to customer.last_name, customer %></td>
+        <td><%= customer.mobile %></td>
+        <td><%= link_to customer.user.full_name, customer.user %></td>
+        <td><%= link_to customer.user.owner.full_name, customer.user.owner %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="col-md-2 col-md-offset-4">
+<%= paginate @customers %>
+</div>
